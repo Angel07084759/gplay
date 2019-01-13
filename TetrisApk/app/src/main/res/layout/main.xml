@@ -1,11 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainlay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Main">
 
+    <!--Lay TOP: Score/Help-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SCORE:  "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0000000"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="00h:00m:00s:0"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:onClick="helpClick"
+            android:text="HELP"
+            android:textAllCaps="false"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <!--Lay CENTER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#03df33"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7.5">
+
+        </Space>
+        <!-- Tetris Board-->
+        <TableLayout
+            android:id="@+id/tetris_board"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            android:background="#dd044910"/>
 
 
-</android.support.constraint.ConstraintLayout>
+        <!-- Next Block and Score -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="6.8"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Next"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:id="@+id/next_block"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.02"
+                android:background="#dde1dddd" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="playClick"
+                android:text="Play" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/rotate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:onClick="rotateClick"
+                android:text="RO" />
+
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <!--Lay Control -->
+    <LinearLayout
+        android:id="@+id/controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#cedc201a"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="leftClick"
+            android:text="Lt" />
+        <Button
+            android:id="@+id/up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="upClick"
+            android:text="up" />
+        <Button
+            android:id="@+id/down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="downClick"
+            android:text="dn" />
+
+        <Button
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="rightClick"
+            android:text="Rt" />
+
+    </LinearLayout>
+
+</LinearLayout>
