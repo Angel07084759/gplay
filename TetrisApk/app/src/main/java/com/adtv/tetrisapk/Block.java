@@ -225,9 +225,9 @@ public class Block
         }
 
         //fixing rotate out of bounds errors in row and column with three cells max error
-        for (int i = 0; (block = validateBlock(rotate, -i, 0, false)) == null && i < 3; i++) ;//empty loop
+        for (int i = 0; (block = validateBlock(rotate, -i, 0, false)) == null && i < 2; i++) ;//empty loop
         rotate = block != null ? block : rotate;//updating rotated block
-        for (int i = 0; (block = validateBlock(rotate, 0, -i, false)) == null && i < 3; i++) ;//empty loop
+        for (int i = 0; (block = validateBlock(rotate, 0, -i, false)) == null && i < 2; i++) ;//empty loop
 
         if (block == null)//failed to rotate
         {

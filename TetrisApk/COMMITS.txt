@@ -1,0 +1,3 @@
+Using Block with out inheritance.
+This technique fails in performance.
+
