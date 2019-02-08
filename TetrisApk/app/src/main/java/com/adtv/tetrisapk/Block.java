@@ -10,7 +10,7 @@ public class Block
     /**
      * Constant Default number of cell per block.
      */
-    public static final int CELLS = 4;
+    public static final int CELLS_PER_BLOCK = 4;
     /**
      * Rotation map based on a 4 x 4 array matrix.
      */
@@ -28,10 +28,10 @@ public class Block
 
     /**
      * Block constructor that define a board; a block map; and block color.
-     * Throws IndexOutOfBoundsException if a block is defined with more than CELLS number of cells.
+     * Throws IndexOutOfBoundsException if a block is defined with more than CELLS_PER_BLOCK number of cells.
      *
      * @param board a 2D Cell array to be used to display this block.
-     * @param block a 2D int array that represents a block of CELLS number of cells.
+     * @param block a 2D int array that represents a block of CELLS_PER_BLOCK number of cells.
      * @param color the color that represents this block.
      */
     public Block(Cell[][] board, int[][] block, int color)
@@ -60,7 +60,7 @@ public class Block
      */
     void paintBlock(int[][] block, int id, int color)
     {
-        for (int i = 0; i < CELLS; i++)
+        for (int i = 0; i < CELLS_PER_BLOCK; i++)
         {
             Cell cell = board[block[i][0]][block[i][1]];
             if (cell.getId() == Cell.DEFAULT_ID || cell.getId() == blockID)
@@ -91,7 +91,7 @@ public class Block
     public int getRow()
     {
         int row = block[0][0];
-        for (int i = 1; i < CELLS; i++)
+        for (int i = 1; i < CELLS_PER_BLOCK; i++)
         {
             row = block[i][0] < row ? block[i][0] : row;
         }
@@ -106,7 +106,7 @@ public class Block
     public int getColumn()
     {
         int col = block[0][1];
-        for (int i = 1; i < CELLS; i++)
+        for (int i = 1; i < CELLS_PER_BLOCK; i++)
         {
             col = block[i][1] < col ? block[i][1] : col;
         }
@@ -116,15 +116,15 @@ public class Block
     /**
      * Trace the map of the current block.
      *
-     * @return a copy of the current block map in a 2D array: new int[CELLS][2]
+     * @return a copy of the current block map in a 2D array: new int[CELLS_PER_BLOCK][2]
      */
     public int[][] getBlock()
     {
         int currRow = getRow();//block current row
         int currCol = getColumn();//block current column
-        int[][] temp = new int[CELLS][2];//copy of this block
+        int[][] temp = new int[CELLS_PER_BLOCK][2];//copy of this block
 
-        for (int i = 0; i < CELLS; i++)
+        for (int i = 0; i < CELLS_PER_BLOCK; i++)
         {
             temp[i][0] = block[i][0] - currRow;
             temp[i][1] = block[i][1] - currCol;
@@ -145,8 +145,8 @@ public class Block
      */
     public int[][] validateBlock(int[][] src, int moveRow, int moveCol, boolean force)
     {
-        int[][] copy = new int[CELLS][2];
-        for (int i = 0; i < CELLS; i++)
+        int[][] copy = new int[CELLS_PER_BLOCK][2];
+        for (int i = 0; i < CELLS_PER_BLOCK; i++)
         {
             int newRow = copy[i][0] = src[i][0] + moveRow;
             int newCol = copy[i][1] = src[i][1] + moveCol;
@@ -197,7 +197,7 @@ public class Block
         int currCol = getColumn();//current block column
         int nextRow = board.length;//after rotation block row
         int nextCol = board[0].length;//after rotation block column
-        int[][] rotate = new int[CELLS][2];//rotation helper
+        int[][] rotate = new int[CELLS_PER_BLOCK][2];//rotation helper
         int[][] backup = validateBlock(block, 0, 0, false);//backing up in case rotation fails
 
         if (backup == null)//cannot rotate because of the current position
@@ -209,7 +209,7 @@ public class Block
         paintBlock(block, Cell.DEFAULT_ID, Cell.DEFAULT_COLOR);
 
         //calculating rotation using the ROTATE array map
-        for (int i = 0; i < CELLS; i++)
+        for (int i = 0; i < CELLS_PER_BLOCK; i++)
         {
             rotate[i][0] = ROTATE[(block[i][0]) - currRow][(block[i][1] - currCol)][0];
             rotate[i][1] = ROTATE[(block[i][0]) - currRow][(block[i][1] - currCol)][1];
@@ -218,7 +218,7 @@ public class Block
         }
 
         //calculating current block position after rotating
-        for (int i = 0; i < CELLS; i++)
+        for (int i = 0; i < CELLS_PER_BLOCK; i++)
         {
             rotate[i][0] += (currRow - nextRow);
             rotate[i][1] += (currCol - nextCol);

@@ -1,9 +1,7 @@
 package com.adtv.tetrisapk;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -15,7 +13,7 @@ import java.util.Random;
  * add, move, and rotate the current block in a given layout
  * that represents the Tetris board.
  */
-public class Tetris// implements Runnable
+public class Tetris
 {
     /**
      * Number of rows for the Tetris Board.
@@ -51,7 +49,7 @@ public class Tetris// implements Runnable
     public Tetris(TableLayout tetris_board, TableLayout next_block)
     {
         boardCells = new Cell[ROWS][COLUMNS];
-        nextBlockCells = new Cell[Block.CELLS][Block.CELLS];
+        nextBlockCells = new Cell[Block.CELLS_PER_BLOCK][Block.CELLS_PER_BLOCK];
         initCells(tetris_board, boardCells);
         initCells(next_block, nextBlockCells);
         currentBlock = generateBlock();
@@ -99,7 +97,8 @@ public class Tetris// implements Runnable
         {
             TableRow tableRow = new TableRow(table.getContext());
 
-            TableLayout.LayoutParams rowParam = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f);
+            TableLayout.LayoutParams rowParam = new TableLayout.LayoutParams(
+                    TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f);
             tableRow.setLayoutParams(rowParam);
 
             table.addView(tableRow);
@@ -110,35 +109,14 @@ public class Tetris// implements Runnable
                 cells[row][col].setBackgroundColor(Cell.DEFAULT_COLOR);//?
                 cells[row][col].setPadding(0, 0, 0, 0);
 
-                TableRow.LayoutParams buttonsParam = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f);
+                TableRow.LayoutParams buttonsParam = new TableRow.LayoutParams(
+                        TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f);
                 buttonsParam.setMargins(2, 2, 2, 2);
                 cells[row][col].setLayoutParams(buttonsParam);
                 tableRow.addView(cells[row][col]);
             }
         }
     }
-
-    /**
-     * Moves a tetris block at the given row and column.
-     *
-     * @param row the row value to move the block.
-     * @param col the column value to move the block.
-     * @return true if given values result in valid move; false otherwise.
-     */
-/*    public boolean moveBlock(int row, int col)
-    {
-        return currentBlock.move(row, col);
-    }*/
-
-    /**
-     * Rotates this block clockwise.
-     *
-     * @return true if rotation lays in a valid move; false otherwise.
-     */
-    /*public boolean rotate()
-    {
-        return currentBlock.rotate();
-    }*/
 
     /**
      * Spawns a new Tetris block at the given row and column.
