@@ -29,6 +29,7 @@ public class Block
     /**
      * Block constructor that define a board; a block map; and block color.
      * Throws IndexOutOfBoundsException if a block is defined with more than CELLS_PER_BLOCK number of cells.
+     * Note: A block can be defined of any color of type int.
      *
      * @param board a 2D Cell array to be used to display this block.
      * @param block a 2D int array that represents a block of CELLS_PER_BLOCK number of cells.
@@ -46,7 +47,7 @@ public class Block
      * Sets a board to display this block.
      * @param board the board to display this block.
      */
-    public void setBoard(Cell[][] board)///////////////////////////////////////////////////////////
+    public void setBoard(Cell[][] board)
     {
         this.board = board;
     }
