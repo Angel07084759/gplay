@@ -63,14 +63,34 @@
             android:layout_weight="7.5">
 
         </Space>
-        <!-- Tetris Board-->
-        <TableLayout
+
+        <!-- Tetris Board--> <!--gesture_ctl-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+            <TableLayout
+                android:id="@+id/tetris_board"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="#dd044910"/>
+
+            <TableLayout
+                android:id="@+id/gesture_ctl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"/>
+
+        </RelativeLayout>
+<!--        <TableLayout
             android:id="@+id/tetris_board"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="3"
-            android:background="#dd044910"/>
+            android:background="#dd044910"/>-->
+
 
 
         <!-- Next Block and Score -->

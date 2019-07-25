@@ -10,21 +10,22 @@ import java.util.Random;
 
 /**
  * Tetris is the engine of the game. This class allows you to
- * add, move, and rotate the current block in a given layout
- * that represents the Tetris board.
+ * add, move, and rotate the current block in a given layout ("Tetris board").
+ * Note: This version of the game uses black color blocks only.
  */
 public class Tetris
 {
     /**
-     * Number of rows for the Tetris Board.
+     * Number of rows in board for the game.
      */
     public static final int ROWS = 20;
     /**
-     * Number of columns for the Tetris Board.
+     * Number of columns in board for the game.
      */
     public static final int COLUMNS = ROWS / 2;
 
     //Definitions of each Tetris block.
+    //Each block is define with 4 cell coordinates attached side by side.
     private static final int[][] BLOCK_I = {{0, 0}, {0, 1}, {0, 2}, {0, 3}};
     private static final int[][] BLOCK_J = {{0, 1}, {1, 1}, {2, 1}, {2, 0}};
     private static final int[][] BLOCK_L = {{0, 0}, {1, 0}, {2, 0}, {2, 1}};
@@ -35,13 +36,15 @@ public class Tetris
 
     Block currentBlock;
     Block nextBlock;
+    int rowsCleared;
+
     private Cell[][] boardCells;
     private Cell[][] nextBlockCells;
     private Random random = new Random();
-    private int rowsCleared;
 
     /**
-     * Creates the game environment in the given Layouts.
+     * Creates the game using the given layouts.
+     * The given layouts must be for the board of the game and the next block board.
      *
      * @param tetris_board the main board of the game.
      * @param next_block   the board to display the next block.
@@ -58,7 +61,7 @@ public class Tetris
     }
 
     /**
-     * Generates Tetris Blocks.
+     * Generates a random Tetris Block: I, J, L, O, S, T, or Z.
      *
      * @return a random tetris Block.
      */
@@ -73,16 +76,6 @@ public class Tetris
                 new Block(nextBlockCells, BLOCK_T, Color.BLACK),
                 new Block(nextBlockCells, BLOCK_Z, Color.BLACK)};
         return blocks[random.nextInt(blocks.length)];
-    }
-
-    /**
-     * Accessor for rowsCleared.
-     *
-     * @return the number of row that has been cleared.
-     */
-    public int getRowsCleared()
-    {
-        return rowsCleared;
     }
 
     /**
@@ -129,94 +122,29 @@ public class Tetris
     {
         rowsCleared += clearRow();
         currentBlock = nextBlock;
-        currentBlock.setBoard(boardCells);/////////////////////////////////////////
+        currentBlock.setBoard(boardCells);//adding next block as the current.
         nextBlock = generateBlock();
         paintNextBlock(0,0, random.nextInt(3));
         return currentBlock.move(row, col, false);
     }
 
-
     /**
-     * Resets the Tetris board by clearing all of the current used cells in the board
+     * reset uses the class ResetGame which extends Handler and implements Runnable
+     * to make a visual effect which resets the game and restors each cell
+     * to the default id and color. If runIt is true, the game will run right after
+     * it is been reset.
+     * Note: This is a resources-consuming implementation.
+     *
+     * @param game The game handler object.
+     * @param btns The buttons to be disabled and enabled.
+     * @param audio the audio to be paused and played.
+     * @param timer the timer to be stopped and started.
+     * @param runIt true to run the game after resetting it.
      */
-    public void reset()/////////////////////////////////////////////////////////////////////////////
-    {
-        for (int i = 0; i < nextBlockCells.length; i++)
-        {
-            for (int j = 0; j < nextBlockCells[0].length; j++)
-            {
-                nextBlockCells[i][j].setId(Cell.DEFAULT_ID);
-                nextBlockCells[i][j].setColor(Cell.DEFAULT_COLOR);
-            }
-        }
-        for (int i = 0; i < boardCells.length; i++)
-        {
-            for (int j = 0; j < boardCells[0].length; j++)
-            {
-                boardCells[i][j].setId(Cell.DEFAULT_ID);
-                boardCells[i][j].setColor(Cell.DEFAULT_COLOR);
-            }
-        }
-        rowsCleared = 0;
-    }
     public void reset(Main.GameHandler game, Button[] btns, GameAudioLoop audio, GameTimer timer, boolean runIt)
     {
         new ResetGame(game, btns, audio, timer, runIt);
     }
-
-    private class ResetGame extends Handler implements Runnable
-    {
-        int index;
-
-        Handler game;
-        Button[] btns;
-        GameAudioLoop audio;
-        GameTimer timer;
-        boolean runIt;
-        public ResetGame(Main.GameHandler game, Button[] btns, GameAudioLoop audio, GameTimer timer, boolean runIt)
-        {
-            this.game = game;
-            this.btns = btns;
-            this.audio = audio;
-            this.timer = timer;
-            this.runIt = runIt;
-
-            timer.reset();
-            for (Button b: btns) { b.setEnabled(false);}
-            for (int i = 0; i < nextBlockCells.length; i++)
-            {
-                for (int j = 0; j < nextBlockCells[0].length; j++)
-                {
-                    nextBlockCells[i][j].setId(Cell.DEFAULT_ID);
-                    nextBlockCells[i][j].setColor(Cell.DEFAULT_COLOR);
-                }
-            }
-            post(this);
-        }
-
-        @Override
-        public void run()
-        {
-            int r = (index / boardCells[0].length);
-            int c = (index % boardCells[0].length);
-            boardCells[r][c].setId(Cell.DEFAULT_ID);
-            boardCells[r][c].setColor(Cell.DEFAULT_COLOR);
-            index++;
-            post(this);
-            if (index >= (boardCells.length * boardCells[0].length))
-            {
-                removeCallbacks(this);
-                for (Button b: btns) { b.setEnabled(true);}
-                if (runIt)
-                {
-                    game.post((Runnable) game);
-                    audio.play();
-                    timer.start();
-                }
-            }
-        }
-    }
-
 
     /**
      * Paints the next block in the layout given in the constructor.
@@ -303,5 +231,65 @@ public class Tetris
             }
         }
         return score;
+    }
+
+    /**
+     * ResetGame extends Handler and implements Runnable so it can be
+     * used as a visual effect to reset the game by restoring each cell
+     * to the default id and color. This class disables the array of Buttons passed in
+     * the constructor. And, if runIt is true, the game will run right after it is been reset.
+     * Note: This is a resources-consuming implementation.
+     */
+    private class ResetGame extends Handler implements Runnable
+    {
+        int index;
+
+        Handler game;
+        Button[] btns;
+        GameAudioLoop audio;
+        GameTimer timer;
+        boolean runIt;
+        public ResetGame(Main.GameHandler game, Button[] btns, GameAudioLoop audio, GameTimer timer, boolean runIt)
+        {
+            this.game = game;
+            this.btns = btns;
+            this.audio = audio;
+            this.timer = timer;
+            this.runIt = runIt;
+
+            timer.reset();
+            for (Button b: btns) { b.setEnabled(false);}//disabling buttons
+            for (int i = 0; i < nextBlockCells.length; i++)
+            {
+                for (int j = 0; j < nextBlockCells[0].length; j++)
+                {
+                    nextBlockCells[i][j].setId(Cell.DEFAULT_ID);
+                    nextBlockCells[i][j].setColor(Cell.DEFAULT_COLOR);
+                }
+            }
+            post(this);
+        }
+
+        @Override
+        public void run()
+        {
+            int r = (index / boardCells[0].length);
+            int c = (index % boardCells[0].length);
+            boardCells[r][c].setId(Cell.DEFAULT_ID);
+            boardCells[r][c].setColor(Cell.DEFAULT_COLOR);
+            index++;
+            post(this);
+            if (index >= (boardCells.length * boardCells[0].length))
+            {
+                removeCallbacks(this);
+                for (Button b: btns) { b.setEnabled(true);}//enabling buttons
+                if (runIt)
+                {
+                    game.post((Runnable) game);
+                    audio.play();
+                    timer.start();
+                }
+            }
+        }
     }
 }

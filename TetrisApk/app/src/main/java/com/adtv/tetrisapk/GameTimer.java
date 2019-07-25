@@ -4,9 +4,18 @@ import android.os.Handler;
 import android.widget.TextView;
 import java.util.Locale;
 
+/**
+ * GameTimer uses the system time to implement a timer.
+ * This timer can be run, stopped, paused, and reset.
+ * This timer uses the TextView given in the constructor
+ * to display the current time value.
+ */
 public class GameTimer extends Handler implements Runnable
 {
-    public  static final long DELAY_MILLIS = 100;
+    /**
+     * The time in milliseconds to check for a time change.
+     */
+    public  static final long DELAY_IN_MILLIS = 100;
 
     private long startTime;
     private long elapsedTime;
@@ -23,14 +32,32 @@ public class GameTimer extends Handler implements Runnable
     {
         elapsedTime = System.currentTimeMillis() - startTime;
         timeView.setText(timeFormat(elapsedTime));
-        postDelayed(this, DELAY_MILLIS);
+        postDelayed(this, DELAY_IN_MILLIS);
     }
 
+    /**
+     * Getter for isRunning.
+     * @return the value of isRunning.
+     */
     public boolean isRunning()
     {
         return isRunning;
     }
 
+    /**
+     * Getter for elapsedTime.
+     *
+     * @return the value of elapedTime.
+     */
+    public long getElapsedTime()
+    {
+        return elapsedTime;
+    }
+
+    /**
+     * If the timer is not running, calls postDelayed, sets isRunning to true
+     * and start time to System.currentTimeMillis() - elapsedTime.
+     */
     public void start()
     {
         if (!isRunning)
@@ -41,6 +68,10 @@ public class GameTimer extends Handler implements Runnable
         }
     }
 
+    /**
+     * If the timer is running, this calls removeCallbacks
+     * and sets isRunning to false.
+     */
     public void stop()
     {
         if (isRunning)
@@ -49,6 +80,10 @@ public class GameTimer extends Handler implements Runnable
             isRunning = false;
         }
     }
+
+    /**
+     * Calls stop and sets variable to the default values.
+     */
     public void reset()
     {
         stop();
@@ -58,7 +93,7 @@ public class GameTimer extends Handler implements Runnable
     }
 
     /**
-     * Formats the given timeTxt (in milliseconds) to h:m:s.
+     * Formats the given time(in milliseconds) to h:m:s (String).
      *
      * @param millis the timeTxt in milliseconds to be converted.
      * @return s formatted timeTxt in string as 02dh:02dm:02ds:02ml
