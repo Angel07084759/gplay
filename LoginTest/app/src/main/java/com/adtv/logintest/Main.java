@@ -25,15 +25,13 @@ public class Main extends AppCompatActivity
         userPass = (EditText) findViewById(R.id.user_pass);
     }
 
-
-    public /*synchronized*/ void  onLogin(View view)
+    private final String SERVER_IP = "http://angelcpuparts.x10.mx/";//http://192.168.0.11/
+    public void onLogin(View view)
     {
         String user_id = userID.getText().toString().trim();
         String user_name = userName.getText().toString().trim();
         String user_pass = userPass.getText().toString().trim();
-        String login_url = view.getId() == R.id.login
-                ? "http://192.168.0.11/connLoginTest.php"
-                : "http://192.168.0.11/connRegisterTest.php";
+        String login_url = SERVER_IP +  (view.getId() == R.id.login ? "connLoginTest.php" : "connRegisterTest.php");
 
 
         if (phpConnectLog == null)
@@ -68,7 +66,7 @@ public class Main extends AppCompatActivity
     PHPConnect phpConnectReg = null;
     public void startMonitor(View view)
     {
-        String login_url = "http://192.168.0.11/connMonitorTest.php";
+        String login_url = SERVER_IP + "connMonitorTest.php";
 
 
         if (phpConnectMon == null)
