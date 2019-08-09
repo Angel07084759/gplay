@@ -15,14 +15,15 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="register"
             android:text="Register"/>
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_err_msg"
+        android:id="@+id/tv_login_err_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorErrMsg"
         android:textStyle="bold|italic" />
 
     <LinearLayout
@@ -31,16 +32,16 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/et_id"
+            android:id="@+id/et_login_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:ems="10"
-            android:hint="user ID or phone #"
-            android:inputType="textPersonName" />
+            android:gravity="center"
+            android:hint="phone #"
+            android:inputType="number" />
 
         <EditText
-            android:id="@+id/et_pass"
+            android:id="@+id/et_login_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -53,12 +54,12 @@
             android:layout_height="wrap_content"
             android:gravity="center">
             <CheckBox
-                android:id="@+id/cb_remember"
+                android:id="@+id/cb_login_remember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="remember" />
             <CheckBox
-                android:id="@+id/cb_show_pass"
+                android:id="@+id/cb_login_show_pass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="show pass" />

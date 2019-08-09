@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">RAITE</string>
+    <string name="valid_id_msg">User ID must contain 3 to 15 characters, must start with a letter, and can contain numeric values.</string>
+
+
+</resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorRaiteGreen"
+    android:orientation="vertical"
+    tools:context=".Register">
+
+    <!--Message-->
+    <TextView
+        android:id="@+id/tv_register_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold|italic"
+        android:text="@string/valid_id_msg"/>
+    <!--Error Message-->
+    <TextView
+        android:id="@+id/tv_register_err_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorErrMsg"
+        android:textStyle="bold|italic"  />
+    <!--Check ID -->
+    <EditText
+        android:id="@+id/et_register_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:ems="10"
+        android:hint="id"
+        android:inputType="textPersonName" />
+    <!--First Name-->
+    <EditText
+        android:id="@+id/et_register_fname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:ems="10"
+        android:hint="first name"
+        android:inputType="textPersonName" />
+    <!--Last Name-->
+    <EditText
+        android:id="@+id/et_register_lname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:ems="10"
+        android:hint="last name"
+        android:inputType="textPersonName" />
+    <!--Phone number-->
+    <EditText
+        android:id="@+id/et_register_phone_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="phone #"
+        android:inputType="number" />
+
+    <!--Activation code-->
+<!--    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et_activation_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:ems="10"
+            android:hint="activation code"
+            android:inputType="textPersonName" />
+        <Button
+            android:id="@+id/b_get_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="right"
+            android:text="get code"/>
+    </LinearLayout>-->
+
+</LinearLayout>
