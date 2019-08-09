@@ -15,3 +15,22 @@ https://x10hosting.com/sso/main
 http://angelcpuparts.x10.mx/
 198.91.81.6
 ================================
+** status: available, busy, ...
+================================
+	1	driver	varchar(1)	latin1_swedish_ci		No	0			 Change Change	 Drop Drop	
+More More
+	2	phoneIndex	varchar(16)	latin1_swedish_ci		No	None			 Change Change	 Drop Drop	
+More More
+	3	fname	varchar(16)	latin1_swedish_ci		No	None			 Change Change	 Drop Drop	
+More More
+	4	lname	varchar(16)	latin1_swedish_ci		No	None			 Change Change	 Drop Drop	
+More More
+	5	latitude	varchar(16)	latin1_swedish_ci		No	None			 Change Change	 Drop Drop	
+More More
+	6	longitude	varchar(16)	latin1_swedish_ci		No	None			 Change Change	 Drop Drop	
+More More
+	7	ftime	varchar(16)	latin1_swedish_ci		No	None			 Change Change	 Drop Drop	
+More More
+	8	ltime	varchar(16)	latin1_swedish_ci		No	None			 Change Change	 Drop Drop	
+More More
+

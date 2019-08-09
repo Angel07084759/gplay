@@ -15,7 +15,7 @@ public class Main extends AppCompatActivity
 {
     private final String SERVER = "http://angelcpuparts.x10.mx/raite/";//http://192.168.0.11/
     private final String REGISTER = SERVER + "register.php";
-    enum DBVar {driver, phone, fname, lname, latitude, longitude, ftime, ltime;}
+    enum DBVar {status, driver, phone, fname, lname, latitude, longitude, ftime, ltime;}
 
     static String phoneNumber = "";
 
