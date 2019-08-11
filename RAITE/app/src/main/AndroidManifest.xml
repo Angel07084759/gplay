@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.adtv.raite">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /><!--PhoneManager-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /><!--LocationManager-->
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/><!--BroadcastReceiver-->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/><!--PowerManager-->
+
+
 
     <!-- android:roundIcon="@mipmap/ic_launcher_round" -->
     <application
@@ -23,7 +28,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".Verify" />
-        <activity android:name=".PassengerDashboard"></activity>
+        <activity android:name=".PassengerDashboard" />
+        <activity android:name=".DriverDashboard"></activity>
+
+        <!--Alarm-->
+        <receiver
+            android:process=":remote" android:name=".Alarm">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

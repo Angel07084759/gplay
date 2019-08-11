@@ -8,4 +8,28 @@
     android:background="@color/colorRaiteGreen"
     tools:context=".PassengerDashboard">
 
+    <TextView
+        android:id="@+id/tv_passenger_err_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorErrMsg"
+        android:textStyle="bold|italic"
+        android:gravity="bottom|center"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:onClick="drive"
+        android:text="START"/>
+    <Button
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:onClick="driveStop"
+        android:text="STOP"/>
+
+
+
 </LinearLayout>

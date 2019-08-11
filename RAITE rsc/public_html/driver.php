@@ -4,9 +4,11 @@ require_once 'login.php';
 $conn = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 
 
-$drive = $_POST["drive"];
+$driver = $_POST["driver"];
+$ltime =$_POST["ltime"];
+$phone =$_POST["phone"];
 
-$mysql_qry = "UPDATE raiteusers SET drive = '$drive' WHERE phone = '$phone';";
+$mysql_qry = "UPDATE raiteusers SET driver = '$driver', ltime = '$ltime' WHERE phone = '$phone';";
 
 mysqli_query($conn, $mysql_qry);
 

@@ -4,6 +4,7 @@ package com.adtv.raite;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,7 @@ public class Main extends AppCompatActivity
     private TextView errMsgTV;
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState)
+    protected void onCreate(final Bundle savedInstanceState)//PHPStatusServer
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -50,6 +51,12 @@ public class Main extends AppCompatActivity
                     if ( (split[DBVar.fname.ordinal()].equals("") || split[DBVar.lname.ordinal()].equals("")) )
                     {
                         startActivity(new Intent(Main.this, Verify.class));//.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        //overridePendingTransition(0, 0);
+                        finish();
+                    }
+                    else if ( (split[DBVar.driver.ordinal()].equals("1")) )
+                    {
+                        startActivity(new Intent(Main.this, DriverDashboard.class));//.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         //overridePendingTransition(0, 0);
                         finish();
                     }
