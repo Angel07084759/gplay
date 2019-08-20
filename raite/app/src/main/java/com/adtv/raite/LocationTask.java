@@ -1,4 +1,4 @@
-package com.adtv.gmaploctest;
+package com.adtv.raite;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -49,7 +49,7 @@ public class LocationTask //extends AsyncTask<Object, Void, List<Address>>//  im
                     double longitude = location.getLongitude();
                     try
                     {
-                        List<Address> addresses = new Geocoder(context).getFromLocation(latitude, longitude, 1);
+                        List<Address> addresses = new Geocoder(context).getFromLocation(latitude, longitude, GEOCODER_MAX_RESULT);
                         if (addresses == null || addresses.size() == 0)
                         {
                             throw new Exception("LocationTask:runTask(): Could not find current location.");

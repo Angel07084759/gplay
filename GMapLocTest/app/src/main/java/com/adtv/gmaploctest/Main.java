@@ -160,7 +160,7 @@ public class Main extends AppCompatActivity implements TextWatcher, View.OnFocus
                             addrs[i] = addr.getAddressLine(addr.getMaxAddressLineIndex());
                             //Log.d("DEB", addr.getLatitude() + "[ao]" + addr.getLongitude() +  "[i:" + i + "]" + "<" + addr.getFeatureName() + ">" + addr.getAddressLine(addr.getMaxAddressLineIndex()));
                         }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Main.this, android.R.layout.simple_dropdown_item_1line, addrs);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Main.this, android.R.layout.simple_dropdown_item_1line, addrs);//simple_dropdown_item_1line
 
                         addrInhelper.setAdapter(adapter);
 
