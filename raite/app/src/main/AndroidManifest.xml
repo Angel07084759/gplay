@@ -22,11 +22,7 @@
         </activity>
 
         <service
-            android:name=".ForegroundService"
-            android:enabled="true"
-            android:exported="true" />
-        <service
-            android:name=".LocationUpdater"
+            android:name=".MyLocation"
             android:enabled="true"
             android:exported="true" />
 

@@ -47,12 +47,12 @@ public class Main extends AppCompatActivity
                 {
                     String[] split = result.split(",");
 
-                    if ((split[DBVar.fname.ordinal()].equals("") || split[DBVar.lname.ordinal()].equals("")))
+                    if ((split[Const.DBVar.fname.ordinal()].equals("") || split[Const.DBVar.lname.ordinal()].equals("")))
                     {
                         startActivity(new Intent(Main.this, Verify.class));
                         finish();
                     }
-                    else if ((split[DBVar.driver.ordinal()].equals("1")))
+                    else if ((split[Const.DBVar.driver.ordinal()].equals("1")))
                     {
                         startActivity(new Intent(Main.this, Driver.class));
                         finish();
@@ -65,8 +65,8 @@ public class Main extends AppCompatActivity
                 }
             }
         }).execute(Const.REGISTER,
-                DBVar.phone.name(), phoneNumber,
-                DBVar.ftime.name(), timeMillis());
+                Const.DBVar.phone.name(), phoneNumber,
+                Const.DBVar.ftime.name(), timeMillis());
 
 
     }

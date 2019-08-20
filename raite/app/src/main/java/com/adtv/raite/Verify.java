@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 public class Verify extends AppCompatActivity
 {
-    private final String SERVER = "http://angelcpuparts.x10.mx/raite/";//http://192.168.0.11/
-    private final String VERIFY = SERVER + "verify.php";
-
     private TextView errMsg;
     private EditText fName, lName;
 
@@ -54,11 +51,11 @@ public class Verify extends AppCompatActivity
                 //overridePendingTransition(0, 0);
                 finish();
             }
-        }).execute(VERIFY,
-                DBVar.fname.name(), fname,
-                DBVar.lname.name(), lname,
-                DBVar.phone.name(), Main.phoneNumber,
-                DBVar.ltime.name(), Main.timeMillis());
+        }).execute(Const.VERIFY,
+                Const.DBVar.fname.name(), fname,
+                Const.DBVar.lname.name(), lname,
+                Const.DBVar.phone.name(), Main.phoneNumber,
+                Const.DBVar.ltime.name(), Main.timeMillis());
 
     }
 }
