@@ -21,7 +21,11 @@ public class PHPConnect extends AsyncTask<String, Void, String>
 
     public interface PHPResponse{void processFinish(String result);}
     public PHPResponse delegate = null;
-    public PHPConnect(PHPResponse delegate){ this.delegate = delegate;}
+
+    public PHPConnect(PHPResponse delegate)
+    {
+        this.delegate = delegate;
+    }
 
     @Override
     protected void onPostExecute(String s)

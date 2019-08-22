@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.adtv.raite">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" /><!-- PowerManager.WakeLock -->
+
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- PhoneManager -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /><!-- LocationServices -->
 
     <!-- LocationManager -->
     <application

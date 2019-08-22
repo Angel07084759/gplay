@@ -17,7 +17,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Passenger extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener
 {
@@ -48,20 +55,50 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
 
         lastTextChangeTime = System.currentTimeMillis();
 
-        new LocationTask(this, new LocationTask.LocationTaskResponse() {
+        new LocationTask(this, new LocationTask.LocationTaskResponse()
+        {
             @Override
-            public void onProcessFinish(List<Address> addresses)//get lat lng
+            public void onProcessFinish(final List<Address> addresses)//get lat lng
             {
                 new PHPConnect(new PHPConnect.PHPResponse() {
                     @Override
                     public void processFinish(String result)//get drivers
                     {
-                        errMsgTV.setText(result);
+
+                        List<Const.User> drivers = new ArrayList<>(0);
+
+                        if (result != null)
+                        {
+                            Log.d("DEB", "... ... ... ...");
+                            drivers = Const.sortCloser(result.split(","), Main.currentUser);
+                        }
+                        String str = "DRIVERS: ";////////////////////////////////
+
+                        for (Const.User driver : drivers)
+                        {
+                            //Log.d("DEB", ">>>" + driver.toString());///////////////////
+                            str += driver.toString().split(",")[Const.DBVar.fname.ordinal()] + "  ";
+                        }
+                        if (drivers.size() > 0)
+                        {
+                            closestDriver = drivers.get(0);
+                        }
+
+                        errMsgTV.setText(str);////////////////////////////////////
                     }
-                }).execute(Const.GET_DRIVERS);
+                }).execute(Const.GET_DRIVERS, Const.DBVar.driver.name(), "1");
             }
         }).runTask();
 
+    }
+
+
+    ArrayList<String> getDriver()
+    {
+        ArrayList<String>  drivers  = new ArrayList<String> ();
+
+
+        return drivers;
     }
 
 
@@ -201,5 +238,22 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
         }
 
     }
-    //public void checkAccessFineLocationPermission(){}
+
+    Const.User closestDriver = Main.currentUser;
+    public void testingClick(View view)
+    {
+        String[] dataStar = closestDriver.toString().split(",");
+        String[] dataDest = Main.currentUser.toString().split(",");
+
+
+        String latStart = dataStar[Const.DBVar.latitude.ordinal()];
+        String lngStart = dataStar[Const.DBVar.longitude.ordinal()];
+        String latDest = dataDest[Const.DBVar.latitude.ordinal()];
+        String lngDest = dataDest[Const.DBVar.longitude.ordinal()];
+        String geoUri = "http://maps.google.com/maps?saddr=" + latStart + "," + lngStart + "&daddr=" + latDest + "," + lngDest;
+        Log.d("DEB", "[ " +  closestDriver.toString() + " ]");/////////////////////////////////////////////
+        Log.d("DEB", "[ " +  Main.currentUser.toString() + " ]");/////////////////////////////////////////////
+        Log.d("DEB", "[ " + geoUri + " ]");/////////////////////////////////////////////
+        startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(geoUri)));
+    }
 }

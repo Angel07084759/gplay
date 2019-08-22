@@ -15,7 +15,6 @@ import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
@@ -23,17 +22,27 @@ import java.util.List;
 public class MyLocation extends Service
 {
     public static final String CHANNEL_ID = "MyLocationServiceChannel";
-    private static final String NOTIFICATION_MSG = "inputExtra";
+    private static final String INPUT_EXTRA = "inputExtra";
     private static final String NOTIFICATION_TITLE = "Your location is currently visible!";
-    private static final long UPDATE_INTERVAL = 5000;
+    private static final long UPDATE_INTERVAL = 3000;
     private static boolean isRunning = false;
+
+    PowerManager.WakeLock wakeLock = null;
 
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        String notificationMsg = intent.getStringExtra(NOTIFICATION_MSG);
+        if (wakeLock == null)
+        {
+            wakeLock = ((PowerManager)
+                getApplication().getSystemService(Context.POWER_SERVICE))
+                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "WakeLock:");
+        }
+        wakeLock.acquire();
+
+        String notificationMsg = intent.getStringExtra(INPUT_EXTRA);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -82,11 +91,6 @@ public class MyLocation extends Service
         {
             if (isRunning)
             {
-                //Wake up phone
-                PowerManager pm = (PowerManager) getApplication().getSystemService(Context.POWER_SERVICE);
-                PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DEB: TAG: Alarm: BroadcastReceiver");
-                wl.acquire();
-                //Perform Task
                 new LocationTask(getApplicationContext(), new LocationTask.LocationTaskResponse()
                 {
                     @Override
@@ -115,9 +119,7 @@ public class MyLocation extends Service
                         }
                     }
                 }).runTask();
-                //Release sleep phone
                 handler.postDelayed(this, UPDATE_INTERVAL);
-                wl.release();
             }
         }
 
@@ -128,7 +130,7 @@ public class MyLocation extends Service
     {
         Intent serviceIntent = new Intent(context, MyLocation.class);
 
-        serviceIntent.putExtra(NOTIFICATION_MSG, msg);
+        serviceIntent.putExtra(INPUT_EXTRA, msg);
 
         ContextCompat.startForegroundService(context, serviceIntent);
     }
@@ -145,8 +147,9 @@ public class MyLocation extends Service
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         isRunning = false;
+        wakeLock.release();
+        super.onDestroy();
     }
 
     @Nullable

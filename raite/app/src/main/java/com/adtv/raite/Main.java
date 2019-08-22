@@ -1,22 +1,27 @@
 package com.adtv.raite;
 
 import android.Manifest.permission;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import java.util.Collections;
+import java.util.List;
 
 public class Main extends AppCompatActivity
 {
     final static String[] PERMISSIONS = {permission.ACCESS_FINE_LOCATION, permission.READ_PHONE_STATE};
     protected static String phoneNumber = null;
+    protected static Const.User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,38 +40,64 @@ public class Main extends AppCompatActivity
 
         if ((phoneNumber = getPhoneNumber()) == null)
         {
+            Log.d("DEB", "Could NOT get phone number");
             return;
         }
 
-        new PHPConnect(new PHPConnect.PHPResponse()
+
+        new LocationTask(getApplicationContext(), new LocationTask.LocationTaskResponse()
         {
             @Override
-            public void processFinish(String result)
+            public void onProcessFinish(List<Address> addresses)
             {
-                if (result != null)
+                Log.d("DEB", "MAIN[a]:LOCATION " + (addresses != null));
+                if (addresses != null && addresses.size() > 0)
                 {
-                    String[] split = result.split(",");
+                    String latitude = addresses.get(0).getLatitude() + "";
+                    String longitude = addresses.get(0).getLongitude() + "";
+                    Log.d("DEB", phoneNumber + "MAIN[a]:LOCATION[if] " + latitude + "," + longitude);
+                    new PHPConnect(new PHPConnect.PHPResponse()
+                    {
+                        @Override
+                        public void processFinish(String result)
+                        {
+                            Log.d("DEB", "MAIN[b]:RESULT " + result);
 
-                    if ((split[Const.DBVar.fname.ordinal()].equals("") || split[Const.DBVar.lname.ordinal()].equals("")))
-                    {
-                        startActivity(new Intent(Main.this, Verify.class));
-                        finish();
-                    }
-                    else if ((split[Const.DBVar.driver.ordinal()].equals("1")))
-                    {
-                        startActivity(new Intent(Main.this, Driver.class));
-                        finish();
-                    }
-                    else
-                    {
-                        startActivity(new Intent(Main.this, Passenger.class));
-                        finish();
-                    }
+                            if (result != null)
+                            {
+                                String[] split = result.split(",");
+
+                                if (split[Const.DBVar.fname.ordinal()].equals("0") || split[Const.DBVar.lname.ordinal()].equals("0"))
+                                {
+                                    startActivity(new Intent(Main.this, Verify.class));
+                                    finish();
+                                }
+                                else if (split[Const.DBVar.driver.ordinal()].equals("1"))
+                                {
+                                    startActivity(new Intent(Main.this, Driver.class));
+                                    finish();
+                                }
+                                else
+                                {
+                                    startActivity(new Intent(Main.this, Passenger.class));
+                                    finish();
+                                }
+                                currentUser = new Const.User(result.split(","));
+                            }
+                        }
+                    }).execute(Const.REGISTER,
+                            Const.DBVar.phone.name(), phoneNumber,
+                            Const.DBVar.ftime.name(), timeMillis(),
+                            Const.DBVar.latitude.name(), latitude,//just added
+                            Const.DBVar.longitude.name(), longitude);//just added
+
+
                 }
+
+
             }
-        }).execute(Const.REGISTER,
-                Const.DBVar.phone.name(), phoneNumber,
-                Const.DBVar.ftime.name(), timeMillis());
+        }).runTask();
+
 
 
     }

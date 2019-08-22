@@ -47,6 +47,7 @@ public class Verify extends AppCompatActivity
             @Override
             public void processFinish(String result)
             {
+                Main.currentUser = new Const.User(result.split(","));
                 startActivity(new Intent(Verify.this, Passenger.class));//.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                 //overridePendingTransition(0, 0);
                 finish();
