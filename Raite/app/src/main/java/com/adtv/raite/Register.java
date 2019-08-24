@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Verify extends AppCompatActivity
+public class Register extends AppCompatActivity
 {
     private TextView errMsg;
     private EditText fName, lName;
@@ -16,7 +16,7 @@ public class Verify extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.verify);
+        setContentView(R.layout.register);
         errMsg = (TextView) findViewById(R.id.tv_verify_err_msg);
         fName = (EditText) findViewById(R.id.fname);
         lName = (EditText) findViewById(R.id.lname);
@@ -45,18 +45,26 @@ public class Verify extends AppCompatActivity
         }
         new PHPConnect(new PHPConnect.PHPResponse() {
             @Override
-            public void processFinish(String result)
+            public void onProcessFinish(String result)
             {
-                Main.currentUser = new Const.User(result.split(","));
-                startActivity(new Intent(Verify.this, Passenger.class));//.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                //overridePendingTransition(0, 0);
-                finish();
+                if (result != null)
+                {
+                    Main.user = new User(result.split(User.DELIMITER));
+                    startActivity(new Intent(Register.this, Passenger.class));
+                    //.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    //overridePendingTransition(0, 0);
+                    finish();
+                }
+                else
+                {
+                    errMsg.setText("Connection Failed!");
+                }
             }
-        }).execute(Const.VERIFY,
-                Const.DBVar.fname.name(), fname,
-                Const.DBVar.lname.name(), lname,
-                Const.DBVar.phone.name(), Main.phoneNumber,
-                Const.DBVar.ltime.name(), Main.timeMillis());
+        }).execute(User.REGISTER,
+                User.Field.fname.name(), fname,
+                User.Field.lname.name(), lname,
+                User.Field.ltime.name(), Main.timestamp(),
+                User.Field.phone.name(), Main.phoneNumber);
 
     }
 }

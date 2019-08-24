@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Passenger">
+
+    <TextView
+        android:id="@+id/tv_passenger_err_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorErrMsg"
+        android:textStyle="bold|italic"
+        android:gravity="bottom|center"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/et_addr_start"
+        android:layout_width="match_parent"
+        android:inputType="textPersonName"
+        android:layout_height="80dp"
+        android:hint="Enter Start Address"
+        android:completionThreshold="1"/>
+    <AutoCompleteTextView
+        android:id="@+id/et_addr_dest"
+        android:layout_width="match_parent"
+        android:inputType="textPersonName"
+        android:layout_height="80dp"
+        android:hint=" Enter Destination Address"
+        android:completionThreshold="1"/>
+
+    <Button
+        android:id="@+id/btn_get_directions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Verify"
+        android:onClick="click"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="see closest Driver on map"
+        android:onClick="testingClick"/>
+
+
+</LinearLayout>

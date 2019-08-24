@@ -4,5 +4,7 @@
     <string name="acknowledgeENG">Raite is an application created for those who wish to cooperate to reduce the excessive use of automotive vehicles. The use of this application is of your own accord, therefore, Raite is not responsible for losses or accidents. In order to use this application, you need to allow all of the required permissions.</string>
     <string name="acknowledge">ACKNOWLEDGE</string>
     <string name="accept">ACCEPT</string>
+    <string name="not_working">Is not working? Test your location and try again -> </string>
+    <string name="open_map">*</string>
 
 </resources>

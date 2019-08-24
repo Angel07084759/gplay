@@ -18,12 +18,14 @@
     <AutoCompleteTextView
         android:id="@+id/et_addr_start"
         android:layout_width="match_parent"
+        android:inputType="textCapSentences"
         android:layout_height="80dp"
         android:hint="Enter Start Address"
         android:completionThreshold="1"/>
     <AutoCompleteTextView
         android:id="@+id/et_addr_dest"
         android:layout_width="match_parent"
+        android:inputType="textCapSentences"
         android:layout_height="80dp"
         android:hint=" Enter Destination Address"
         android:completionThreshold="1"/>

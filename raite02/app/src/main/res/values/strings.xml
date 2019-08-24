@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Raite</string>
+    <string name="acknowledgeSPA">Raite es una aplicación creada para aquellas personas que deseen cooperar para disminuir el uso  excesivo de vehículos automotrices. El uso de esta aplicación es por voluntad propia, por lo tanto, Raite no se hace responsable de pérdidas o accidentes.  Para poder usar esta aplicación, necesitas aceptar los permisos requeridos.</string>
+    <string name="acknowledgeENG">Raite is an application created for those who wish to cooperate to reduce the excessive use of automotive vehicles. The use of this application is of your own accord, therefore, Raite is not responsible for losses or accidents. In order to use this application, you need to allow all of the required permissions.</string>
+    <string name="acknowledge">ACKNOWLEDGE</string>
+    <string name="accept">ACCEPT</string>
+
+</resources>

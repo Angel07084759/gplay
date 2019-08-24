@@ -18,13 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class Passenger extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener
 {
@@ -62,22 +56,22 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
             {
                 new PHPConnect(new PHPConnect.PHPResponse() {
                     @Override
-                    public void processFinish(String result)//get drivers
+                    public void onProcessFinish(String result)//get drivers
                     {
 
-                        List<Const.User> drivers = new ArrayList<>(0);
+                        List<User> drivers = new ArrayList<>(0);
 
                         if (result != null)
                         {
                             Log.d("DEB", "... ... ... ...");
-                            drivers = Const.sortCloser(result.split(","), Main.currentUser);
+                            drivers = User.sortCloser(result.split(","), Main.user);
                         }
                         String str = "DRIVERS: ";////////////////////////////////
 
-                        for (Const.User driver : drivers)
+                        for (User driver : drivers)
                         {
                             //Log.d("DEB", ">>>" + driver.toString());///////////////////
-                            str += driver.toString().split(",")[Const.DBVar.fname.ordinal()] + "  ";
+                            str += driver.toString().split(",")[User.Field.fname.ordinal()] + "  ";
                         }
                         if (drivers.size() > 0)
                         {
@@ -86,7 +80,7 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
 
                         errMsgTV.setText(str);////////////////////////////////////
                     }
-                }).execute(Const.GET_DRIVERS, Const.DBVar.driver.name(), "1");
+                }).execute(User.DRIVERS, User.Field.driver.name(), "1");//NEED MORE IMPLEMENTATION
             }
         }).runTask();
 
@@ -142,7 +136,7 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
                                 {
                                     geoUri += (latDest + "," + lngDest + "&daddr=" + latStart + "," + lngStart);
                                 }
-                                startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(geoUri)));
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri)));
                             }
                         }).runTask();
                     }
@@ -153,7 +147,7 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
                         double latDest = addrsListAB.get(1).getLatitude();
                         double lngDest = addrsListAB.get(1).getLongitude();
                         String geoUri = "http://maps.google.com/maps?saddr=" + latStart + "," + lngStart + "&daddr=" + latDest + "," + lngDest;
-                        startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(geoUri)));
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri)));
                     }
                     else
                     {
@@ -172,7 +166,7 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
                                 double latStart = addresses.get(0).getLatitude();
                                 double lngStart = addresses.get(0).getLongitude();
                                 String geoUri = geoUri = "http://maps.google.com/maps?q=loc:" + latStart + "," + lngStart;
-                                startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(geoUri)));
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri)));
                             }
                         }
                     }).runTask();
@@ -239,21 +233,21 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
 
     }
 
-    Const.User closestDriver = Main.currentUser;
+    User closestDriver = Main.user;
     public void testingClick(View view)
     {
         String[] dataStar = closestDriver.toString().split(",");
-        String[] dataDest = Main.currentUser.toString().split(",");
+        String[] dataDest = Main.user.toString().split(",");
 
 
-        String latStart = dataStar[Const.DBVar.latitude.ordinal()];
-        String lngStart = dataStar[Const.DBVar.longitude.ordinal()];
-        String latDest = dataDest[Const.DBVar.latitude.ordinal()];
-        String lngDest = dataDest[Const.DBVar.longitude.ordinal()];
+        String latStart = dataStar[User.Field.latitude.ordinal()];
+        String lngStart = dataStar[User.Field.longitude.ordinal()];
+        String latDest = dataDest[User.Field.latitude.ordinal()];
+        String lngDest = dataDest[User.Field.longitude.ordinal()];
         String geoUri = "http://maps.google.com/maps?saddr=" + latStart + "," + lngStart + "&daddr=" + latDest + "," + lngDest;
         Log.d("DEB", "[ " +  closestDriver.toString() + " ]");/////////////////////////////////////////////
-        Log.d("DEB", "[ " +  Main.currentUser.toString() + " ]");/////////////////////////////////////////////
+        Log.d("DEB", "[ " +  Main.user.toString() + " ]");/////////////////////////////////////////////
         Log.d("DEB", "[ " + geoUri + " ]");/////////////////////////////////////////////
-        startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(geoUri)));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri)));
     }
 }

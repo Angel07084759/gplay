@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class MyLocation extends Service
+public class LocationService extends Service
 {
     public static final String CHANNEL_ID = "MyLocationServiceChannel";
     private static final String INPUT_EXTRA = "inputExtra";
@@ -55,7 +55,7 @@ public class MyLocation extends Service
         }
 
 
-        Intent notificationIntent = new Intent(this, Main.class);
+        Intent notificationIntent = new Intent(this, Driver.class);
 
         notificationIntent.setAction(Intent.ACTION_MAIN);//
         notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);//
@@ -104,18 +104,18 @@ public class MyLocation extends Service
                             new PHPConnect(new PHPConnect.PHPResponse()
                             {
                                 @Override
-                                public void processFinish(String result)
+                                public void onProcessFinish(String result)
                                 {
                                     if (result == null || result.trim().length() == 0)
                                     {
-                                        Toast.makeText(getApplicationContext(), "MyLocation: Location update Failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "LocationService: Location update Failed", Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                            }).execute(Const.MY_LOCATION,
-                                    Const.DBVar.phone.name(), Main.phoneNumber,
-                                    Const.DBVar.ltime.name(), Main.timeMillis(),
-                                    Const.DBVar.latitude.name(), latitude,
-                                    Const.DBVar.longitude.name(), longitude);
+                            }).execute(User.LOCATION,
+                                    User.Field.latitude.name(), latitude,
+                                    User.Field.longitude.name(), longitude,
+                                    User.Field.ltime.name(), Main.timestamp(),
+                                    User.Field.phone.name(), Main.phoneNumber);
                         }
                     }
                 }).runTask();
@@ -128,7 +128,7 @@ public class MyLocation extends Service
 
     public static void startService(Context context, String msg)
     {
-        Intent serviceIntent = new Intent(context, MyLocation.class);
+        Intent serviceIntent = new Intent(context, LocationService.class);
 
         serviceIntent.putExtra(INPUT_EXTRA, msg);
 
@@ -137,7 +137,7 @@ public class MyLocation extends Service
 
     public static void stopService(Context context)
     {
-        Intent serviceIntent = new Intent(context, MyLocation.class);
+        Intent serviceIntent = new Intent(context, LocationService.class);
         context.stopService(serviceIntent);
     }
     public static boolean isRunning()

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.adtv.raite">
 
@@ -7,7 +6,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- PhoneManager -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /><!-- LocationServices -->
 
-    <!-- LocationManager -->
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_raite_green"
@@ -24,13 +22,13 @@
         </activity>
 
         <service
-            android:name=".MyLocation"
+            android:name=".LocationService"
             android:enabled="true"
             android:exported="true" />
 
         <activity android:name=".Driver" />
         <activity android:name=".Passenger"></activity>
-        <activity android:name=".Verify"></activity>
+        <activity android:name=".Register"></activity>
     </application>
 
 </manifest>
