@@ -1,7 +1,9 @@
 package com.adtv.raite;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Location;
 import android.net.Uri;
@@ -9,11 +11,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +33,8 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
     private long lastTextChangeTime;
     private int wordsCount;
     private TextView errMsgTV;
+
+    User closestDriver = Main.user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -79,6 +88,54 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
                         }
 
                         errMsgTV.setText(str);////////////////////////////////////
+
+                        LinearLayout ignoredList = (LinearLayout) findViewById(R.id.show_drivers);//to be inflated
+
+                        //inflater: adds  views to a layout
+                        LayoutInflater inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
+
+                        for(final User user: drivers)
+                        {
+                            //Retrieves the template view to populate the ignored list layout.
+                            View ignoredApp = inflater.inflate(R.layout.showdriver, null);
+
+
+                            TextView initials = (TextView) ignoredApp.findViewById(R.id.initials);
+                            Button openmap = (Button) ignoredApp.findViewById(R.id.mapit);
+
+                            //Populating views
+                            String[] fields = user.toString().split(User.DELIMITER);
+                            String initialStr = fields[User.Field.fname.ordinal()].charAt(0) + "";
+                            initialStr += fields[User.Field.lname.ordinal()].charAt(0) + "";
+                            initials.setText(initialStr);
+
+                            ignoredList.addView(ignoredApp);
+
+
+                            //Adding onclick listener for restore to be available
+                            openmap.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v)
+                                {
+                                    String[] dataStar = user.toString().split(",");
+                                    String[] dataDest = Main.user.toString().split(",");
+
+
+                                    String latStart = dataStar[User.Field.latitude.ordinal()];
+                                    String lngStart = dataStar[User.Field.longitude.ordinal()];
+                                    String latDest = dataDest[User.Field.latitude.ordinal()];
+                                    String lngDest = dataDest[User.Field.longitude.ordinal()];
+                                    String geoUri = "http://maps.google.com/maps?saddr=" + latStart + "," + lngStart + "&daddr=" + latDest + "," + lngDest;
+                                    Log.d("DEB", "[ " +  closestDriver.toString() + " ]");/////////////////////////////////////////////
+                                    Log.d("DEB", "[ " +  Main.user.toString() + " ]");/////////////////////////////////////////////
+                                    Log.d("DEB", "[ " + geoUri + " ]");/////////////////////////////////////////////
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri)));
+                                }
+                            });
+                        }
+
+
                     }
                 }).execute(User.DRIVERS, User.Field.driver.name(), "1");//NEED MORE IMPLEMENTATION
             }
@@ -231,23 +288,5 @@ public class Passenger extends AppCompatActivity implements TextWatcher, View.On
             //Log.d("DEB", "onFocusChange: " + v.getId() +  hasFocus + ">>>" + addrInhelper.getHint());
         }
 
-    }
-
-    User closestDriver = Main.user;
-    public void testingClick(View view)
-    {
-        String[] dataStar = closestDriver.toString().split(",");
-        String[] dataDest = Main.user.toString().split(",");
-
-
-        String latStart = dataStar[User.Field.latitude.ordinal()];
-        String lngStart = dataStar[User.Field.longitude.ordinal()];
-        String latDest = dataDest[User.Field.latitude.ordinal()];
-        String lngDest = dataDest[User.Field.longitude.ordinal()];
-        String geoUri = "http://maps.google.com/maps?saddr=" + latStart + "," + lngStart + "&daddr=" + latDest + "," + lngDest;
-        Log.d("DEB", "[ " +  closestDriver.toString() + " ]");/////////////////////////////////////////////
-        Log.d("DEB", "[ " +  Main.user.toString() + " ]");/////////////////////////////////////////////
-        Log.d("DEB", "[ " + geoUri + " ]");/////////////////////////////////////////////
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri)));
     }
 }

@@ -37,12 +37,18 @@
         android:layout_gravity="center"
         android:text="Verify"
         android:onClick="click"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="see closest Driver on map"
-        android:onClick="testingClick"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/show_drivers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>
